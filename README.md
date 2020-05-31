@@ -1,3 +1,3 @@
-Counter
+# Counter
 
-View: https://znichu.github.io/counter/
+[View](https://znichu.github.io/counter/)
