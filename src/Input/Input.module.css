@@ -1,0 +1,27 @@
+.componentInput {
+    margin-top: 25px;
+}
+
+.componentInput input {
+    text-align: center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/*input[type="number"]:hover,*/
+/*input[type="number"]:focus {*/
+/*    -moz-appearance: number-input;*/
+/*}*/
+
+/*input[type="number"]:focus {*/
+/*    border-bottom: 1px solid #039be5 !important;*/
+/*    box-shadow: 0 1px 0 0 #039be5 !important;*/
+/*}*/

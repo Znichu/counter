@@ -1,0 +1,11 @@
+.counterHeader h5 {
+    padding-bottom: 15px;
+}
+
+.counterHeader span {
+
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 25px;
+}
+
