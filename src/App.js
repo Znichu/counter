@@ -2,55 +2,30 @@ import React from 'react';
 import './App.css';
 import Counter from "./Counter/Counter";
 import Settings from "./SettingsCounter/Settings";
+import {connect} from "react-redux";
+import {increment, reset, saveSettings, updateMax, updateStart} from "./store/counter-reducer";
 
 class App extends React.Component {
 
-    state = {
-        counter: 0,
-        max: 5,
-        start: 0,
-        validated: true
+    incrementCounter = () => {
+        this.props.increment()
+    };
+    resetCounter = () => {
+        this.props.reset()
     };
 
-    componentDidMount() {
-        this.restoreState();
+    addSettings = () => {
+        this.props.saveSettings();
     };
 
-    incrementCounter = () => this.setState((prevState) => ({counter: prevState.counter + 1}),
-        () => {this.saveState();});
-    resetCounter = (value) => this.setState((prevState) => ({...prevState, counter: value}),
-        () => {this.saveState();});
-
-    addSettings = (newCounter) => {
-        this.setState((prevState) => ({...prevState, counter: newCounter, validated: true}),
-            () => {this.saveState();});
+    onChangeInputMax = (inputValue) => {
+        this.props.updateMax(inputValue);
     };
 
-    onChangeInputMax = (value) => {
-        this.setState((prevState) => ({...prevState, max: value, validated: false}),
-            () => {this.saveState();});
+    onChangeInputStart = (inputValue) => {
+        this.props.updateStart(inputValue);
     };
 
-    onChangeInputStart = (value) => {
-        this.setState((prevState) => ({...prevState, start: value,  validated: false}),
-            () => {this.saveState();});
-    };
-
-    saveState = () => {
-        let saveState = JSON.stringify(this.state);
-        localStorage.setItem("save_state", saveState);
-    };
-
-    restoreState = () => {
-        let state = {
-            counter: 0,
-            max: 5,
-            start: 0,
-            validated: true
-        };
-        state = JSON.parse(localStorage.getItem("save_state"));
-        this.setState(state)
-    };
 
     render() {
         return (
@@ -58,13 +33,18 @@ class App extends React.Component {
                 <div className="counter z-depth-5">
 
                         <Counter
-                            state={this.state}
+                            counter={this.props.counter}
+                            max={this.props.max}
+                            start={this.props.start}
+                            validated={this.props.validated}
                             incrementCounter={this.incrementCounter}
                             resetCounter={this.resetCounter}
                         />
 
                         <Settings
-                            state={this.state}
+                            max={this.props.max}
+                            start={this.props.start}
+                            validated={this.props.validated}
                             onChangeInputMax={this.onChangeInputMax}
                             onChangeInputStart={this.onChangeInputStart}
                             addSettings={this.addSettings}
@@ -76,4 +56,11 @@ class App extends React.Component {
     }
 }
 
-export default App;
+let mapStateToProps = (state) => ({
+    counter: state.counter.counter,
+    max: state.counter.max,
+    start: state.counter.start,
+    validated: state.counter.validated
+});
+
+export default connect (mapStateToProps, {increment, reset, saveSettings, updateMax, updateStart}) (App);

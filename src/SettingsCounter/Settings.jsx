@@ -15,7 +15,9 @@ class Settings extends React.Component {
     };
 
     render() {
-        let { max, start, validated } = this.props.state;
+        let max = this.props.max;
+        let start = this.props.start;
+        let validated = this.props.validated;
         let className = start < 0 || max < 0 || max === start || max < start ? "invalid" : null;
         let disableSave = validated || max === start || start < 0 || max <= 0 || start > max;
 
@@ -26,21 +28,21 @@ class Settings extends React.Component {
                     <Input
                         onChange={this.onChangeMaxValue}
                         type={"number"}
-                        value={this.props.state.max}
+                        value={this.props.max}
                         title={"max value:"}
                         className={className}
-                    />
+                />
 
                     <Input
                         onChange={this.onChangeStartValue}
                         type={"number"}
-                        value={this.props.state.start}
+                        value={this.props.start}
                         title={"start value:"}
                         className={className}
                     />
 
                     <Button
-                        onClick={() => {this.props.addSettings(start)}}
+                        onClick={this.props.addSettings}
                         disable={disableSave}
                         type={"button"}
                         className={"btn teal"}

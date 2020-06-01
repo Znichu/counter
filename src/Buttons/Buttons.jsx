@@ -5,9 +5,12 @@ import style from './Buttons.module.css'
 
 class Buttons extends React.Component {
     render() {
-        let {counter, max, start, validated} = this.props.state;
+        let counter = this.props.counter;
+        let max = this.props.max;
+        let start = this.props.start;
+        let validated = this.props.validated;
         let disableReset = !validated || counter === start || max === start || start > max;
-        let disableIncrement =!validated || counter === max || max === start || start > max;
+        let disableIncrement = !validated || counter === max || max === start || start > max;
 
         return (
             <div className={style.btnGroup}>
@@ -21,7 +24,7 @@ class Buttons extends React.Component {
                 />
 
                 <Button
-                    onClick={() => {this.props.resetCounter(start)}}
+                    onClick={this.props.resetCounter}
                     disable={disableReset}
                     type={"button"}
                     className={"btn red lighten-1"}
