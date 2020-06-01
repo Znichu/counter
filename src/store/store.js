@@ -1,6 +1,10 @@
-import {combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import CounterReducer from "./counter-reducer";
+import { save, load } from "redux-localstorage-simple"
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const createStoreWithMiddleware = composeEnhancers(applyMiddleware(save())) (createStore);
 
 let rootReducer = combineReducers(
     {
@@ -8,8 +12,7 @@ let rootReducer = combineReducers(
     }
 );
 
-
-let store = createStore (rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+let store = createStoreWithMiddleware (rootReducer, load() );
 
 
 export default store;
